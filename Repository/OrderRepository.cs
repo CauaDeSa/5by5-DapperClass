@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Configuration;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using Model;
 
@@ -8,7 +9,7 @@ namespace Repository
     {
         private string ConnectionString { get; set; }
 
-        public OrderRepository() => ConnectionString = "Data Source=127.0.0.1; Initial Catalog=DBOrder; User Id=sa; Password=SqlServer2019!; TrustServerCertificate=Yes";
+        public OrderRepository() => ConnectionString = ConfigurationManager.ConnectionStrings["stringConnection"].ConnectionString;
 
         public bool Insert(Order order)
         {
@@ -17,7 +18,7 @@ namespace Repository
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                connection.Execute(Order.Insert, order);
+                connection.Execute(Order.Insert, new{ Description = order.Description, Table = order.Table, ItemId = order.Item.Id});
 
                 status = true;
             }

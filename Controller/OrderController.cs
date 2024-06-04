@@ -1,4 +1,5 @@
-﻿using Service;
+﻿using Model;
+using Service;
 
 namespace Controller
 {
@@ -8,6 +9,11 @@ namespace Controller
 
         public OrderController() => _orderService = new OrderService();
 
-        public bool Insert(Model.Order order) => _orderService.Insert(order);
+        public bool Insert(Order order)
+        {
+            order.Item.Id = new ItemService().Insert(order.Item);
+
+            return _orderService.Insert(order);
+        } 
     }
 }

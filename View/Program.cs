@@ -9,7 +9,11 @@ internal class Program
         {
             Id = 1,
             Description = "Order 1",
-            Table = 1
+            Table = 1,
+            Item = new Item()
+            {
+                Description = "Item 1"
+            }
         };
 
         if (new OrderController().Insert(order))
