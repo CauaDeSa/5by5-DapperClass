@@ -11,9 +11,11 @@ namespace Controller
 
         public bool Insert(Order order)
         {
-            order.Item.Id = new ItemService().Insert(order.Item);
+            order.Item.ItemId = new ItemService().Insert(order.Item);
 
             return _orderService.Insert(order);
         } 
+
+        public List<Order> GetAll() => _orderService.GetAll();
     }
 }
